@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from decimal import Decimal, InvalidOperation
 
 from bs4 import BeautifulSoup, Tag
 
@@ -73,7 +74,7 @@ class BCVParser:
 
     def _get_rate_values(
         self, rate_section: Tag, id_name: str, date: date
-    ) -> tuple[str, float, date]:
+    ) -> tuple[str, Decimal, date]:
         rate_tag = rate_section.find("div", id=id_name)
         if not rate_tag:
             raise RateValueNotFoundError(
@@ -90,15 +91,15 @@ class BCVParser:
 
         rate_name = name_tag.text.strip().upper()
         try:
-            rate_value = float(rate_value_tag.text.strip().replace(",", "."))
-        except ValueError as exc:
+            rate_value = Decimal(rate_value_tag.text.strip().replace(",", "."))
+        except InvalidOperation as exc:
             raise RateValueNotFoundError(
                 f"Could not parse rate value for '{id_name}'", currency=id_name
             ) from exc
 
         return rate_name, rate_value, date
 
-    def process(self) -> dict[ScraperCurrencyId, tuple[str, float, date]]:
+    def process(self) -> dict[ScraperCurrencyId, tuple[str, Decimal, date]]:
         """Parse the BCV HTML page and return each currency's rate, name and official date."""
         rate_section = self._get_rate_section()
         official_date = self._get_official_date(rate_section)

@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 
 from scraper.client import BCVClient
 from scraper.parser import BCVParser
@@ -9,7 +10,7 @@ from utils.outputs import ConsoleOutput
 
 class BCVScraper:
     @staticmethod
-    def execute() -> dict[ScraperCurrencyId, tuple[str, float, date]] | None:
+    def execute() -> dict[ScraperCurrencyId, tuple[str, Decimal, date]] | None:
         """Fetch and parse today's BCV exchange rates, or None if the operation failed."""
         try:
             bcv_response = BCVClient.get_html()
