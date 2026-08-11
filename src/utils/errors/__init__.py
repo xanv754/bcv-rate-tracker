@@ -1,6 +1,5 @@
-from utils.outputs import ConsoleOutput, SystemLogger
-from utils.errors import (
-    AppError,
+from utils.errors.base import AppError
+from utils.errors.scraper import (
     ScraperError,
     BCVConnectionError,
     BCVResponseError,
@@ -11,8 +10,6 @@ from utils.errors import (
 )
 
 __all__ = [
-    "ConsoleOutput",
-    "SystemLogger",
     "AppError",
     "ScraperError",
     "BCVConnectionError",
