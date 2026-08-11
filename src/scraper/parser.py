@@ -8,8 +8,7 @@ from scraper.constants import (
     RATE_SECTION_CLASS,
     OFFICIAL_DATE_CLASS,
     DATE_CONTENT_ATTR,
-    CURRENCY_RATE_IDS,
-    Currency,
+    ScraperCurrencyId,
 )
 from utils.errors import (
     OfficialDateNotFoundError,
@@ -28,7 +27,9 @@ class BCVParser:
         soup = BeautifulSoup(self._html, "html.parser")
         soup = soup.find("body")
         if not soup:
-            raise RateSectionNotFoundError("Could not find the <body> tag in the BCV page")
+            raise RateSectionNotFoundError(
+                "Could not find the <body> tag in the BCV page"
+            )
 
         main_section = soup.find("div", class_=MAIN_CONTAINER_CLASS)
         if not main_section:
@@ -83,7 +84,8 @@ class BCVParser:
         rate_value_tag = rate_tag.find("strong")
         if not name_tag or not rate_value_tag:
             raise RateValueNotFoundError(
-                f"Could not find the name or value tag for '{id_name}'", currency=id_name
+                f"Could not find the name or value tag for '{id_name}'",
+                currency=id_name,
             )
 
         rate_name = name_tag.text.strip().upper()
@@ -96,15 +98,17 @@ class BCVParser:
 
         return rate_name, rate_value, date
 
-    def process(self) -> dict[Currency, tuple[str, float, date]]:
+    def process(self) -> dict[ScraperCurrencyId, tuple[str, float, date]]:
         """Parse the BCV HTML page and return each currency's rate, name and official date."""
         rate_section = self._get_rate_section()
         official_date = self._get_official_date(rate_section)
 
         rates = {}
-        for currency, id_name in CURRENCY_RATE_IDS.items():
+        for currency_id in ScraperCurrencyId:
             try:
-                rates[currency] = self._get_rate_values(rate_section, id_name, official_date)
+                rates[currency_id] = self._get_rate_values(
+                    rate_section, currency_id.value, official_date
+                )
             except RateValueNotFoundError:
                 continue
 
