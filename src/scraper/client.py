@@ -1,7 +1,9 @@
 import httpx
 from pydantic import BaseModel
 
+from scraper.constants import SSL_VERIFICATION_DISABLED_MESSAGE
 from utils.errors import BCVConnectionError, BCVResponseError
+from utils.outputs import SystemLogger
 
 BCV_URL_BASE = "https://www.bcv.org.ve"
 BCV_RATE_URL = f"{BCV_URL_BASE}/tasas-informativas-sistema-bancario"
@@ -18,6 +20,7 @@ class BCVClient:
     def get_html() -> ResponseModel:
         """Fetch the BCV exchange rates page HTML, raising on connection or HTTP errors."""
         try:
+            SystemLogger().warning(SSL_VERIFICATION_DISABLED_MESSAGE)
             response = httpx.get(BCV_RATE_URL, verify=False)
             response.raise_for_status()
             return ResponseModel(

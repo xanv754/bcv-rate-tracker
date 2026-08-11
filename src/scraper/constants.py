@@ -20,3 +20,8 @@ RATE_SECTION_CLASS: Final[str] = "view-content"
 
 OFFICIAL_DATE_CLASS: Final[str] = "date-display-single"
 DATE_CONTENT_ATTR: Final[str] = "content"
+
+SSL_VERIFICATION_DISABLED_MESSAGE: Final[str] = (
+    "SSL verification disabled for BCV requests: bcv.org.ve does not serve a "
+    "valid certificate chain. This is intentional and expected."
+)
