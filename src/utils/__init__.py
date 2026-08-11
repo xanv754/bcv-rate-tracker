@@ -1,5 +1,6 @@
-from utils.outputs import SystemLogger
+from utils.outputs import ConsoleOutput, SystemLogger
 
 __all__ = [
+    "ConsoleOutput",
     "SystemLogger",
 ]

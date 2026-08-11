@@ -15,3 +15,9 @@ LOG_ROTATED_FILE_SEPARATOR: Final[str] = "-"
 
 LOG_MESSAGE_FORMAT: Final[str] = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 LOG_DATE_FORMAT: Final[str] = "%Y-%m-%d %H:%M:%S"
+
+CONSOLE_SUCCESS_STYLE: Final[str] = "bold green"
+CONSOLE_WARNING_STYLE: Final[str] = "bold yellow"
+CONSOLE_ERROR_STYLE: Final[str] = "bold red"
+
+CONSOLE_SPINNER_STYLE: Final[str] = "dots"
