@@ -1,7 +1,7 @@
 from scraper.client import BCVClient, ResponseModel
 from scraper.constants import ScraperCurrencyId
 from scraper.parser import BCVParser
-from scraper.__main__ import BCVScraper
+from scraper.__main__ import BCVScraper, ScraperResponse, ScraperFailure, RateInfoModel
 
 __all__ = [
     "BCVClient",
@@ -9,4 +9,7 @@ __all__ = [
     "ScraperCurrencyId",
     "BCVParser",
     "BCVScraper",
+    "ScraperResponse",
+    "ScraperFailure",
+    "RateInfoModel",
 ]

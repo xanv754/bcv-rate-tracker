@@ -24,7 +24,7 @@ class BCVParser:
     def __init__(self, html_doc: str) -> None:
         self._html = html_doc
 
-    def _get_rate_section(self) -> Tag:
+    def get_rate_section(self) -> Tag:
         soup = BeautifulSoup(self._html, "html.parser")
         soup = soup.find("body")
         if not soup:
@@ -101,7 +101,7 @@ class BCVParser:
 
     def process(self) -> dict[ScraperCurrencyId, tuple[str, Decimal, date]]:
         """Parse the BCV HTML page and return each currency's rate, name and official date."""
-        rate_section = self._get_rate_section()
+        rate_section = self.get_rate_section()
         official_date = self._get_official_date(rate_section)
 
         rates = {}

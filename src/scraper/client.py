@@ -12,10 +12,10 @@ BCV_RATE_URL = f"{BCV_URL_BASE}/tasas-informativas-sistema-bancario"
 class ResponseModel(BaseModel):
     status_code: int
     content: str | None = None
+    url: str
 
 
 class BCVClient:
-
     @staticmethod
     def get_html() -> ResponseModel:
         """Fetch the BCV exchange rates page HTML, raising on connection or HTTP errors."""
@@ -24,7 +24,9 @@ class BCVClient:
             response = httpx.get(BCV_RATE_URL, verify=False)
             response.raise_for_status()
             return ResponseModel(
-                status_code=response.status_code, content=response.text
+                status_code=response.status_code,
+                content=response.text,
+                url=BCV_RATE_URL,
             )
         except httpx.HTTPStatusError as exc:
             raise BCVResponseError(
