@@ -1,2 +1,4 @@
 # Features
-- Warning en el `client` para definir que la conexión no tiene una certificación SSL y es intencional.
+- Obtener la URL en la respuesta del scraper.
+- Obtener el snapshot en la respuesta del scraper.
+- Crear los objetos con validaciones en transform para el almacenamiento.

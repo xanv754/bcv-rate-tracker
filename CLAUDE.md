@@ -53,10 +53,11 @@ Scraper que consulta periódicamente el sitio del Banco Central de Venezuela (BC
 scraper/     # fetch + parseo del HTML del BCV
 transform/   # validación con Pydantic, normalización
 storage/     # repositorio SQLAlchemy, queries de inserción/lectura
+utils/       # otras dependencias necesarias, errores personalizados, salidas por consola personalizadas y administración del log del sistema
 cli.py       # entrypoint invocado por cron
 ```
 
-## Reglas de trabajo
+## Anotaciones del sistema
 
 - Nunca usar `FLOAT` para `rate` — siempre `NUMERIC`.
 - Cada corrida debe registrar su resultado en `scrape_runs`, incluso si falla.
@@ -64,3 +65,16 @@ cli.py       # entrypoint invocado por cron
 - Selector HTML del BCV puede romperse sin aviso — capturar excepción de parseo, loggear, y marcar el `scrape_run` como `failed` en vez de crashear el proceso.
 - Zona horaria del cron: configurar explícitamente en VET, no asumir el timezone del servidor.
 - Tests obligatorios sobre el parser antes de tocar la capa de storage.
+
+## Reglas para Programar
+Estas reglas serán aplicadas para todas las sesiones que se trabajen. Sin excepción:
+
+- Trabaja con el paradigma orientado a objetos.
+- Trabaja siempre siguiendo el principio KISS.
+- Siempre piensa si las soluciones pueden realizar de forma más óptima siguiendo algún patrón de diseño; de ser así, comenta que vas a programar la solución con algún patrón de diseño.
+- Realiza todo el código en inglés.
+- No des nada por sentado; siempre pregunta cuando tengas duda de qué decisión tomar.
+- Siempre que necesites modificar código existente (que no se trate de añadir código al script) pide autorización y explica las razones de la modificación necesaria.
+- Siempre crea los docstrings únicamente para los métodos públicos.
+- Siempre trabaja ordenada, eficiente y optimizadamente.
+- Para realizar los commits (cuando se requiera) siempre sigue las convenciones de commits, no agregues información innecesaria a los mensajes (e.g nombre de autor, detalles específicos menores, etc...). No hagas push después del commit.
