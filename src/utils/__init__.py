@@ -8,7 +8,12 @@ from utils.errors import (
     RateSectionNotFoundError,
     OfficialDateNotFoundError,
     RateValueNotFoundError,
+    StorageError,
+    DatabaseConfigError,
+    DatabaseConnectionError,
+    DatabasePersistError,
 )
+from utils.env import DatabaseConfig
 
 __all__ = [
     "ConsoleOutput",
@@ -21,4 +26,9 @@ __all__ = [
     "RateSectionNotFoundError",
     "OfficialDateNotFoundError",
     "RateValueNotFoundError",
+    "StorageError",
+    "DatabaseConfigError",
+    "DatabaseConnectionError",
+    "DatabasePersistError",
+    "DatabaseConfig",
 ]

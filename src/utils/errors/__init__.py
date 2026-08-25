@@ -8,6 +8,12 @@ from utils.errors.scraper import (
     OfficialDateNotFoundError,
     RateValueNotFoundError,
 )
+from utils.errors.storage import (
+    StorageError,
+    DatabaseConfigError,
+    DatabaseConnectionError,
+    DatabasePersistError,
+)
 
 __all__ = [
     "AppError",
@@ -18,4 +24,8 @@ __all__ = [
     "RateSectionNotFoundError",
     "OfficialDateNotFoundError",
     "RateValueNotFoundError",
+    "StorageError",
+    "DatabaseConfigError",
+    "DatabaseConnectionError",
+    "DatabasePersistError",
 ]
