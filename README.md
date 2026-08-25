@@ -10,7 +10,7 @@ Requiere Python 3.10+ y una base de datos PostgreSQL accesible.
 
 ```bash
 git clone <repo-url>
-cd BCV-Scraper
+cd bcv-rate-tracker
 python -m venv .venv
 source .venv/bin/activate
 pip install .
