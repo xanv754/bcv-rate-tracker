@@ -1,5 +1,7 @@
 # BCV Scraper
 
+[![Tests](https://github.com/xanv754/bcv-rate-tracker/actions/workflows/tests.yml/badge.svg)](https://github.com/xanv754/bcv-rate-tracker/actions/workflows/tests.yml)
+
 Scraper que consulta periódicamente el sitio del Banco Central de Venezuela ([bcv.org.ve](https://www.bcv.org.ve/)) para obtener las tasas de cambio oficiales (USD, EUR, CNY, TRY, RUB) y las almacena en PostgreSQL, manteniendo un histórico completo de cada publicación (no solo el último valor).
 
 Cada corrida queda registrada en `scrape_runs` (éxito, fallo o parcial), lo que da trazabilidad y observabilidad sobre el proceso incluso cuando la extracción falla. Ver [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) y [`docs/MODELS.md`](docs/MODELS.md) para el detalle de capas y modelo de datos.
