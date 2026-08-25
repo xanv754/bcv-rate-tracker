@@ -26,6 +26,16 @@ class TestDatabaseConfigDefaults:
 
         assert DatabaseConfig.port() == 6543
 
+    def test_sslmode_defaults_to_none_when_env_var_missing(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.delenv("DB_SSLMODE", raising=False)
+
+        assert DatabaseConfig.sslmode() is None
+
+    def test_sslmode_uses_env_var_when_set(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("DB_SSLMODE", "require")
+
+        assert DatabaseConfig.sslmode() == "require"
+
 
 class TestDatabaseConfigRequiredValues:
     @pytest.mark.parametrize(
@@ -57,6 +67,7 @@ class TestDatabaseConfigUrl:
         monkeypatch.setenv("DB_NAME", "bcv_db")
         monkeypatch.setenv("DB_USER", "bcv_user")
         monkeypatch.setenv("DB_PASSWORD", "secret")
+        monkeypatch.delenv("DB_SSLMODE", raising=False)
 
         url = DatabaseConfig.url()
 
@@ -67,3 +78,29 @@ class TestDatabaseConfigUrl:
         assert url.database == "bcv_db"
         assert url.username == "bcv_user"
         assert url.password == "secret"
+
+    def test_builds_url_without_sslmode_query_param_when_not_set(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        monkeypatch.setenv("DB_HOST", "db.internal")
+        monkeypatch.setenv("DB_PORT", "6543")
+        monkeypatch.setenv("DB_NAME", "bcv_db")
+        monkeypatch.setenv("DB_USER", "bcv_user")
+        monkeypatch.setenv("DB_PASSWORD", "secret")
+        monkeypatch.delenv("DB_SSLMODE", raising=False)
+
+        url = DatabaseConfig.url()
+
+        assert url.query == {}
+
+    def test_builds_url_with_sslmode_query_param_when_set(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("DB_HOST", "db.internal")
+        monkeypatch.setenv("DB_PORT", "6543")
+        monkeypatch.setenv("DB_NAME", "bcv_db")
+        monkeypatch.setenv("DB_USER", "bcv_user")
+        monkeypatch.setenv("DB_PASSWORD", "secret")
+        monkeypatch.setenv("DB_SSLMODE", "require")
+
+        url = DatabaseConfig.url()
+
+        assert url.query == {"sslmode": "require"}

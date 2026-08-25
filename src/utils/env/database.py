@@ -9,6 +9,7 @@ from utils.env.constants import (
     DB_NAME_ENV_VAR,
     DB_PASSWORD_ENV_VAR,
     DB_PORT_ENV_VAR,
+    DB_SSLMODE_ENV_VAR,
     DB_USER_ENV_VAR,
     DEFAULT_DB_HOST,
     DEFAULT_DB_PORT,
@@ -49,8 +50,13 @@ class DatabaseConfig:
         return DatabaseConfig._require(DB_PASSWORD_ENV_VAR)
 
     @staticmethod
+    def sslmode() -> str | None:
+        return os.getenv(DB_SSLMODE_ENV_VAR)
+
+    @staticmethod
     def url() -> URL:
         """Build the SQLAlchemy connection URL from the configured environment variables."""
+        sslmode = DatabaseConfig.sslmode()
         return URL.create(
             drivername=DATABASE_DRIVERNAME,
             username=DatabaseConfig.user(),
@@ -58,4 +64,5 @@ class DatabaseConfig:
             host=DatabaseConfig.host(),
             port=DatabaseConfig.port(),
             database=DatabaseConfig.name(),
+            query={"sslmode": sslmode} if sslmode else {},
         )

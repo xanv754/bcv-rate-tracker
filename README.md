@@ -1,6 +1,7 @@
 # BCV Scraper
 
 [![Tests](https://github.com/xanv754/bcv-rate-tracker/actions/workflows/tests.yml/badge.svg)](https://github.com/xanv754/bcv-rate-tracker/actions/workflows/tests.yml)
+[![Scrape](https://github.com/xanv754/bcv-rate-tracker/actions/workflows/scrape.yml/badge.svg)](https://github.com/xanv754/bcv-rate-tracker/actions/workflows/scrape.yml)
 
 Scraper que consulta periódicamente el sitio del Banco Central de Venezuela ([bcv.org.ve](https://www.bcv.org.ve/)) para obtener las tasas de cambio oficiales (USD, EUR, CNY, TRY, RUB) y las almacena en PostgreSQL, manteniendo un histórico completo de cada publicación (no solo el último valor).
 
@@ -35,6 +36,7 @@ Configúralas en un archivo `.env` en la raíz del proyecto (se carga automátic
 | `DB_NAME`     | Sí        | —           | Nombre de la base de datos.        |
 | `DB_USER`     | Sí        | —           | Usuario de conexión.               |
 | `DB_PASSWORD` | Sí        | —           | Contraseña de conexión.            |
+| `DB_SSLMODE`  | No        | —           | Modo SSL de la conexión (ej. `require` para Neon/proveedores gestionados). |
 
 Ejemplo:
 
