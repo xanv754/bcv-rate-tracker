@@ -35,7 +35,7 @@ class BCVScraper:
             return ScraperResponse(
                 rates=rates,
                 info=RateInfoModel(
-                    snapshot=parser.get_rate_section().text, url=bcv_response.url
+                    snapshot=str(parser.get_rate_section()), url=bcv_response.url
                 ),
             )
         except ScraperError as error:
